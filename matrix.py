@@ -3,6 +3,46 @@ class InvalidMatrixDeterminantException(Exception):
     pass
 
 
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+
+
+def mcm(a, b):
+    return a * b / gcd(a, b)
+
+
+class Fraction(object):
+    numerator = None
+    denominator = None
+
+    def __init__(self, numerator, denominator):
+        self.numerator = numerator
+        self.denominator = denominator
+
+    def simplify(self):
+        divisor = gcd(self.numerator, self.denominator)
+        return Fraction(self.numerator/divisor, self.denominator/divisor)
+
+    def add(self, other):
+        denominator = mcm(self.denominator, other.denominator)
+        numerator = denominator/self.denominator*self.numerator + denominator/other.denominator*other.numerator
+        return Fraction(numerator, denominator).simplify()
+
+    def negate(self):
+        return Fraction(-self.numerator, self.denominator).simplify()
+
+    def subtract(self, other):
+        return self.add(other.negate())
+
+    def multiply(self, other):
+        return Fraction(self.numerator*other.numerator, self.denominator*other.denominator).simplify()
+
+    def divide(self, other):
+        return self.multiply(Fraction(other.denominator, other.numerator)).simplify()
+
+
 class Matrix(object):
     data = []
 
@@ -45,23 +85,43 @@ class Matrix(object):
                     result.data[i if i < row else i - 1][j] = self.data[i][j]
         return result
 
+    def leading_zeros(self, row):
+        j = 0
+        while j < self.n and self.data[row][j] == 0:
+            j += 1
+        return j
+
     def order_rows(self):
         for i in range(0, self.m):
             for k in range(i + 1, self.m):
-                j1 = 0
-                j2 = 0
-                j = 0
-                while j < self.n and self.data[i][j] == 0:
-                    j1 += 1
-                    j += 1
-                j = 0
-                while j < self.n and self.data[k][j] == 0:
-                    j2 += 1
-                    j += 1
-                if j1 > j2:
+                if self.leading_zeros(i) > self.leading_zeros(k):
                     aux = self.data[k]
                     self.data[k] = self.data[i]
                     self.data[i] = aux
+
+    def inverse(self):
+        result = Matrix(m=self.m, n=2*self.n)
+        for i in range(0, self.m):
+            result.data[i][i + self.n] = 1.0
+        for i in range(0, self.m):
+            for j in range(0, self.n):
+                result.data[i][j] = self.data[i][j]
+        complete = result.gauss_jordan_reduction()
+        result = Matrix(m=self.m, n=self.n)
+        for i in range(0, self.m):
+            for j in range(self.n, 2*self.n):
+                result.data[i][j - self.n] = complete.data[i][j]
+        return result
+
+    def multiply(self, other):
+        result = Matrix(m=self.m, n=other.n)
+        for i in range(0, self.m):
+            for j in range(0, other.n):
+                value = 0
+                for k in range(0, self.n):
+                    value += self.data[i][k] * other.data[k][j]
+                result.data[i][j] = value
+        return result
 
     def gauss_jordan_reduction(self):
         result = self.copy()
