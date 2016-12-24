@@ -76,6 +76,7 @@ class MatrixTest(TestCase):
         self.assertEqual(f.numerator, 51)
         self.assertEqual(f.denominator, 1)
         self.assertEqual(float(f), 51.0)
+        self.assertEqual(Fraction(3, 7) ** 2, Fraction(9, 49))
 
     def test_inverse_matrix(self):
         m = Matrix([[1, 2], [3, 5]])
@@ -85,6 +86,18 @@ class MatrixTest(TestCase):
     def test_multiply_matrices(self):
         m = Matrix([[1, 3], [2, 7]]).multiply(Matrix([[2, 5, 8], [4, 3, 2]]))
         self.assertEqual(m.data, [[14, 14, 14], [32, 31, 30]])
+
+    def test_sum_matrices(self):
+        m = Matrix([[1, 3], [2, 7]]).add(Matrix([[2, 5], [4, 3]]))
+        self.assertEqual(m.data, [[3, 8], [6, 10]])
+
+    def test_transpose_matrix(self):
+        m = Matrix([[1, 4, 5], [3, 7, 8]]).transpose()
+        self.assertEqual(m.data, [[1, 3], [4, 7], [5, 8]])
+
+    def test_scalar_multiplication(self):
+        m = Matrix([[1, 2, 3, 4], [2, 3, 4, 5]]).scalar_multiplication(10)
+        self.assertEqual(m.data, [[10, 20, 30, 40], [20, 30, 40, 50]])
 
 
 

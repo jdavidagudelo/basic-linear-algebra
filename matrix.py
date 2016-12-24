@@ -21,6 +21,9 @@ class Fraction(object):
         self.numerator = numerator
         self.denominator = denominator
 
+    def __pow__(self, power, modulo=None):
+        return Fraction(self.numerator ** power, self.denominator ** power).simplify()
+
     def __add__(self, other):
         if isinstance(other, (int,)):
             other = Fraction(other, 1)
@@ -130,6 +133,20 @@ class Matrix(object):
         except IndexError:
             return 0
 
+    def __add__(self, other):
+        return self.add(other)
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            return self.scalar_multiplication(other)
+        return self.multiply(other)
+
+    def __sub__(self, other):
+        return self.add(-other)
+
+    def __neg__(self):
+        return self.negate()
+
     def remove_column(self, column):
         result = Matrix(m=self.m, n=self.n - 1)
         for i in range(0, self.m):
@@ -172,6 +189,30 @@ class Matrix(object):
         for i in range(0, self.m):
             for j in range(self.n, 2*self.n):
                 result.data[i][j - self.n] = complete.data[i][j]
+        return result
+
+    def scalar_multiplication(self, scalar):
+        result = self.copy()
+        for i in range(0, self.m):
+            for j in range(0, self.n):
+                result.data[i][j] = scalar * self.data[i][j]
+        return result
+
+    def negate(self):
+        return self.scalar_multiplication(-1)
+
+    def transpose(self):
+        result = Matrix(m=self.n, n=self.m)
+        for i in range(0, self.m):
+            for j in range(0, self.n):
+                result.data[j][i] = self.data[i][j]
+        return result
+
+    def add(self, other):
+        result = self.copy()
+        for i in range(0, self.m):
+            for j in range(0, self.n):
+                result.data[i][j] += other.data[i][j]
         return result
 
     def multiply(self, other):
