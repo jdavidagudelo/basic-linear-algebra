@@ -1,6 +1,7 @@
 from unittest.case import TestCase
 from matrix import Matrix, Fraction
 
+
 class MatrixTest(TestCase):
     def setUp(self):
         pass
@@ -35,6 +36,11 @@ class MatrixTest(TestCase):
         for i in range(m.m):
             for j in range(m.n):
                 self.assertAlmostEqual(expected[i][j], result[i][j])
+        m = Matrix(data=[[3, 7, 8, 2], [4, 5, 3, 4], [3, 2, 1, 7]], data_type=Fraction)
+        expected = [[Fraction(1, 1), Fraction(0, 1), Fraction(0, 1), Fraction(33, 8)],
+                    [Fraction(0, 1), Fraction(1, 1), Fraction(0, 1), Fraction(-29, 8)],
+                    [Fraction(0, 1), Fraction(0, 1), Fraction(1, 1), Fraction(15, 8)]]
+        self.assertEqual(expected, m.gauss_jordan_reduction().data)
 
     def test_gauss_jordan_order_rows(self):
         m = Matrix([[0, 0, 1, 2], [1, 0, 0, 3], [0, 1, 0, 2]])
@@ -53,9 +59,23 @@ class MatrixTest(TestCase):
         f = Fraction(1, 2).subtract(Fraction(1, 3))
         self.assertEqual(f.numerator, 1)
         self.assertEqual(f.denominator, 6)
+
+        f = Fraction(1, 2) + (Fraction(1, 3))
+        self.assertEqual(f.numerator, 5)
+        self.assertEqual(f.denominator, 6)
+        f = Fraction(3, 5) * (Fraction(40, 25))
+        self.assertEqual(f.numerator, 24)
+        self.assertEqual(f.denominator, 25)
+        f = Fraction(3, 5) / (Fraction(25, 40))
+        self.assertEqual(f.numerator, 24)
+        self.assertEqual(f.denominator, 25)
+        f = Fraction(1, 2) - (Fraction(1, 3))
+        self.assertEqual(f.numerator, 1)
+        self.assertEqual(f.denominator, 6)
         f = Fraction(1020, 20).simplify()
         self.assertEqual(f.numerator, 51)
         self.assertEqual(f.denominator, 1)
+        self.assertEqual(float(f), 51.0)
 
     def test_inverse_matrix(self):
         m = Matrix([[1, 2], [3, 5]])

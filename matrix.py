@@ -21,6 +21,62 @@ class Fraction(object):
         self.numerator = numerator
         self.denominator = denominator
 
+    def __add__(self, other):
+        if isinstance(other, (int,)):
+            other = Fraction(other, 1)
+        return self.add(other)
+
+    def __sub__(self, other):
+        if isinstance(other, (int,)):
+            other = Fraction(other, 1)
+        return self.subtract(other)
+
+    def __mul__(self, other):
+        if isinstance(other, (int,)):
+            other = Fraction(other, 1)
+        return self.multiply(other)
+
+    def __truediv__(self, other):
+        if isinstance(other, (int,)):
+            other = Fraction(other, 1)
+        return self.divide(other)
+
+    def __neg__(self):
+        return self.negate()
+
+    def __float__(self):
+        return float(self.numerator) / float(self.denominator)
+
+    def __lt__(self, other):
+        if isinstance(other, (int,)):
+            other = Fraction(other, 1)
+        return float(self) < float(other)
+
+    def __le__(self, other):
+        if isinstance(other, (int,)):
+            other = Fraction(other, 1)
+        return float(self) <= float(other)
+
+    def __ge__(self, other):
+        if isinstance(other, (int,)):
+            other = Fraction(other, 1)
+        return float(self) >= float(other)
+
+    def __gt__(self, other):
+        if isinstance(other, (int,)):
+            other = Fraction(other, 1)
+        return float(self) > float(other)
+
+    def __ne__(self, other):
+        if isinstance(other, (int,)):
+            other = Fraction(other, 1)
+        return self.numerator != other.numerator or self.denominator != other.denominator
+
+    def __eq__(self, other):
+        if isinstance(other, (int,)):
+            other = Fraction(other, 1)
+        return self.numerator == other.numerator and self.denominator == other.denominator
+
     def simplify(self):
         divisor = gcd(self.numerator, self.denominator)
         return Fraction(self.numerator/divisor, self.denominator/divisor)
@@ -46,10 +102,15 @@ class Fraction(object):
 class Matrix(object):
     data = []
 
-    def __init__(self, data=None, m=None, n=None):
+    def __init__(self, data=None, m=None, n=None, data_type=None):
         n = 0 if n is None else n
         m = 0 if m is None else m
         self.data = data if data is not None else [[0 for _ in range(n)] for _ in range(m)]
+        if data_type == Fraction:
+            for i in range(0, self.m):
+                for j in range(0, self.n):
+                    if isinstance(self.data[i][j], int):
+                        self.data[i][j] = Fraction(self.data[i][j], 1)
 
     def copy(self):
         result = Matrix(m=self.m, n=self.n)
@@ -128,14 +189,14 @@ class Matrix(object):
         result.order_rows()
         j = 0
         for i in range(0, result.m):
-            current_pivot = float(result.data[i][j])
-            if current_pivot != 1.0 and current_pivot != 0.0:
+            current_pivot = result.data[i][j]
+            if current_pivot != 1 and current_pivot != 0:
                 for k in range(j, result.n):
-                    result.data[i][k] = float(result.data[i][k])/current_pivot
+                    result.data[i][k] /= current_pivot
             for k in range(result.m):
                 if k != i:
                     if result.data[i][j] != 0 and result.data[k][j] != 0:
-                        factor = float(result.data[k][j])/float(result.data[i][j])
+                        factor = result.data[k][j]/result.data[i][j]
                         for l in range(j, result.n):
                             result.data[k][l] -= factor * result.data[i][l]
             j += 1

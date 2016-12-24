@@ -24,8 +24,8 @@
       <file leaf-file-name="matrix.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/matrix.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.1988636">
-              <caret line="118" column="28" selection-start-line="118" selection-start-column="28" selection-end-line="118" selection-end-column="28" />
+            <state vertical-scroll-proportion="9.612565">
+              <caret line="204" column="22" selection-start-line="204" selection-start-column="22" selection-end-line="204" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -35,7 +35,7 @@
         <entry file="file://$PROJECT_DIR$/tests/test_matrix.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="65" column="76" selection-start-line="65" selection-start-column="76" selection-end-line="65" selection-end-column="76" />
+              <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -346,24 +346,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 14h 34m 06s.xml">
-      <configuration name="Nosetests in test_matrix" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 14h 35m 26s.xml">
-      <configuration name="Nosetests in test_matrix" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 14h 37m 01s.xml">
-      <configuration name="Nosetests in test_matrix" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 14h 37m 27s.xml">
-      <configuration name="Nosetests in test_matrix" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 14h 37m 57s.xml">
-      <configuration name="Nosetests in test_matrix" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 14h 38m 11s.xml">
-      <configuration name="Nosetests in test_matrix" configurationId="tests" />
-    </history-entry>
     <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 14h 43m 58s.xml">
       <configuration name="Nosetests in test_matrix" configurationId="tests" />
     </history-entry>
@@ -376,18 +358,36 @@
     <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 14h 47m 50s.xml">
       <configuration name="Nosetests in test_matrix" configurationId="tests" />
     </history-entry>
+    <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 15h 20m 10s.xml">
+      <configuration name="Nosetests in test_matrix" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 15h 21m 59s.xml">
+      <configuration name="Nosetests in test_matrix" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 15h 34m 06s.xml">
+      <configuration name="Nosetests in test_matrix" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 15h 35m 25s.xml">
+      <configuration name="Nosetests in test_matrix" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 15h 44m 25s.xml">
+      <configuration name="Nosetests in test_matrix" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_matrix - 2016.12.24 at 15h 44m 31s.xml">
+      <configuration name="Nosetests in test_matrix" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1368" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25755286" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25755286" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="LuaJ" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38474026" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33603895" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -445,16 +445,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_matrix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="65" column="76" selection-start-line="65" selection-start-column="76" selection-end-line="65" selection-end-column="76" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.3333334">
@@ -463,10 +453,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_matrix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/matrix.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.1988636">
-          <caret line="118" column="28" selection-start-line="118" selection-start-column="28" selection-end-line="118" selection-end-column="28" />
+        <state vertical-scroll-proportion="9.612565">
+          <caret line="204" column="22" selection-start-line="204" selection-start-column="22" selection-end-line="204" selection-end-column="22" />
           <folding />
         </state>
       </provider>
