@@ -25,6 +25,24 @@ class Variable(Function):
     def simplify(self):
         return self
 
+    def __add__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Sum([self, other]).simplify()
+
+    def __sub__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Sum([self, Product([other, Constant(-1)])]).simplify()
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Product([self, other]).simplify()
+
+    def __pow__(self, power, modulo=None):
+        return Power(self, power).simplify()
+
     def __eq__(self, other):
         if not isinstance(other, Variable):
             return False
@@ -47,6 +65,24 @@ class Constant(Function):
     @staticmethod
     def one():
         return Constant(1.0)
+
+    def __add__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Sum([self, other]).simplify()
+
+    def __sub__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Sum([self, Product([other, Constant(-1)])]).simplify()
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Product([self, other]).simplify()
+
+    def __pow__(self, power, modulo=None):
+        return Power(self, power).simplify()
 
     def evaluate(self, value):
         return self.constant
@@ -84,7 +120,11 @@ class Sum(Function):
         variables_count = {}
         simplified_summands = []
         for function in self.summands:
-            simplified_summands.append(function.simplify())
+            simplified = function.simplify()
+            if isinstance(simplified, Sum):
+                simplified_summands += simplified.summands
+            else:
+                simplified_summands.append(simplified)
         for function in simplified_summands:
             if isinstance(function, Constant):
                 if constant_value is None:
@@ -118,6 +158,24 @@ class Sum(Function):
             result_summands.append(function.derivative())
         return Sum(result_summands).simplify()
 
+    def __add__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Sum([self, other]).simplify()
+
+    def __sub__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Sum([self, Product([other, Constant(-1)])]).simplify()
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Product([self, other]).simplify()
+
+    def __pow__(self, power, modulo=None):
+        return Power(self, power).simplify()
+
     def __eq__(self, other):
         if not isinstance(other, Sum):
             return False
@@ -148,7 +206,11 @@ class Product(Function):
         variables_count = {}
         simplified_multiplicands = []
         for function in self.multiplicands:
-            simplified_multiplicands.append(function.simplify())
+            simplified = function.simplify()
+            if isinstance(simplified, Product):
+                simplified_multiplicands += simplified.multiplicands
+            else:
+                simplified_multiplicands.append(simplified)
         for function in simplified_multiplicands:
             if isinstance(function, Constant):
                 if constant_value is None:
@@ -194,6 +256,24 @@ class Product(Function):
             current_product = Product(simplified.multiplicands[:(i + 1)]).simplify()
         return current_derivative.simplify()
 
+    def __add__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Sum([self, other]).simplify()
+
+    def __sub__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Sum([self, Product([other, Constant(-1)])]).simplify()
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Product([self, other]).simplify()
+
+    def __pow__(self, power, modulo=None):
+        return Power(self, power).simplify()
+
     def __eq__(self, other):
         if not isinstance(other, Product):
             return False
@@ -202,7 +282,7 @@ class Product(Function):
     def __str__(self):
         result = ''
         for function in self.multiplicands:
-            result = '{0}*{1}'.format(result, function) if result != '' else '{0}'.format(function)
+            result = '({0})*({1})'.format(result, function) if result != '' else '{0}'.format(function)
         return result
 
 
@@ -230,6 +310,24 @@ class Power(Function):
             return simplified.derivative()
         return Product([Constant(self.power),
                         self.function.derivative(), Power(self.function, self.power - 1)]).simplify()
+
+    def __add__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Sum([self, other]).simplify()
+
+    def __sub__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Sum([self, Product([other, Constant(-1)])]).simplify()
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float, complex)):
+            other = Constant(other)
+        return Product([self, other]).simplify()
+
+    def __pow__(self, power, modulo=None):
+        return Power(self, power).simplify()
 
     def __eq__(self, other):
         if not isinstance(other, Power):

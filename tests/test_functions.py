@@ -75,7 +75,7 @@ class MatrixTest(TestCase):
             self.assertEqual('{0}'.format(product), '{0}'.format(constant_value))
             for second_constant_value in self.constant_values:
                 product = Product([Constant(constant_value), Constant(second_constant_value)])
-                self.assertEqual('{0}'.format(product), '{0}*{1}'.format(constant_value,
+                self.assertEqual('{0}'.format(product), '({0})*({1})'.format(constant_value,
                                                                          second_constant_value))
         for constant_value in self.constant_values:
             for variable_name in self.variable_names:
@@ -84,7 +84,7 @@ class MatrixTest(TestCase):
                 for second_constant_value in self.constant_values:
                     product = Product([Constant(constant_value), Variable(variable_name),
                                        Constant(second_constant_value)])
-                    self.assertEqual('{0}'.format(product), '{0}*{1}*{2}'.format(constant_value, variable_name,
+                    self.assertEqual('{0}'.format(product), '(({0})*({1}))*({2})'.format(constant_value, variable_name,
                                                                                  second_constant_value))
 
     def test_simplify_product(self):
@@ -153,8 +153,6 @@ class MatrixTest(TestCase):
             for second_constant_value in self.constant_values:
                 sum_result = Sum([Constant(constant_value), Constant(second_constant_value)])
                 simplified = sum_result.simplify()
-                print(sum_result)
-                print('result = {0}'.format(simplified))
                 self.assertEqual(simplified, Constant(constant_value + second_constant_value))
         for constant_value in self.constant_values:
             for variable_name in self.variable_names:
@@ -171,8 +169,6 @@ class MatrixTest(TestCase):
                                       Product([Constant(second_constant_value),
                                                Constant(constant_value), Variable(variable_name)])])
                     simplified = product_sum.simplify()
-                    print('{0} Simplified'.format(simplified))
-                    print('{0} Original'.format(product_sum))
                     if constant_value != 0.0 and constant_value*second_constant_value != 1.0 and constant_value*second_constant_value != 0.0:
                         self.assertEqual(simplified, Sum([Constant(constant_value),
                                                           Product(
@@ -222,7 +218,7 @@ class MatrixTest(TestCase):
             self.assertEqual(product.derivative(), Product([Constant(2.0), Variable(variable_name)]))
 
     def test_polynomial_derivative(self):
-        for variable_name in self.variable_names:
+        for variable_name in self.variable_names[0:1]:
             for a1 in self.constant_values:
                 for a2 in self.constant_values:
                     for a3 in self.constant_values:
@@ -232,10 +228,31 @@ class MatrixTest(TestCase):
                                 Product([Constant(a2), Variable(variable_name)]),
                                 Constant(a3)
                             ])
-                        if a2 != 0:
+                        if a2 != 0 and a1 != 0:
                             expected = Sum([Constant(a2), Product([Constant(2*a1), Variable(variable_name)])])
-                        else:
+                        elif a1 == 0 and a2 != 0:
+                            expected = Constant(a2)
+                        elif a1 != 0 and a2 == 0:
                             expected = Product([Constant(2*a1), Variable(variable_name)])
+                        else:
+                            expected = Constant.zero()
                         self.assertEqual(polynomial.derivative(),
                                          expected)
+
+    def test_evaluate_derivatives(self):
+        x = Variable('x')
+        f = (x * 2 + 4) ** 5 * (x * 3 + 7) ** 8
+        self.assertAlmostEqual(f.derivative().evaluate(1), 3.16224*1e12)
+        f = (x ** 2.5) * 2.5 + (x ** 2.4) * 2.4 + (x ** 2.3)*2.3 + (x ** 2.2)*2.2 + (x**2.1)*2.1 + (x**2)*2
+        self.assertAlmostEqual(f.derivative().evaluate(2), 74.47635057089805)
+        f = (x ** 2.5) * 2.5 + (x ** 2.4) * 2.4 + (x ** 2.3)*2.3 - (x ** 2.2)*2.2 - (x**2.1)*2.1 + (x**2)*2
+        self.assertAlmostEqual(f.derivative().evaluate(2), 33.33146653901524)
+        f = (x ** 4 + (x**3)*3 + (x**2)*7 + (x*2)+10)**4
+        self.assertEqual(f.derivative().evaluate(1), 1411372)
+        f = (x*x*x*x + (x*x*x)*3 + (x*x)*7 + (x*2)+10)**4
+        self.assertEqual(f.derivative().evaluate(1), 1411372)
+
+
+
+
 
