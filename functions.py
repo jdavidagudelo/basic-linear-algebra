@@ -1,3 +1,6 @@
+import math
+
+
 class OperationNotSupportedException(Exception):
     pass
 
@@ -336,3 +339,59 @@ class Power(Function):
 
     def __str__(self):
         return '({0})^{1}'.format(self.function, self.power)
+
+
+class Logarithm(Function):
+    function = None
+    base = None
+
+    def __init__(self, function, base):
+        if isinstance(function, (int, float, complex)):
+            function = Constant(function)
+        self.function = function
+        self.base = base
+
+    def evaluate(self, value):
+        return math.log(self.function.evaluate(value), self.base)
+
+    def simplify(self):
+        if isinstance(self.function, Constant):
+            return Constant(math.log(self.function.constant, self.base))
+
+    def derivative(self):
+        return Product([self.function.derivative(), Power(self.function, -1),
+                        Power(math.log(self.base, math.e), -1)])
+
+
+class Exponential(Function):
+    base = None
+    power = None
+
+    def __init__(self, base, power):
+        if isinstance(base, (float, int, complex)):
+            base = Constant(base)
+        if isinstance(power, (float, int, complex)):
+            power = Constant(power)
+        self.base = base
+        self.power = power
+
+    def evaluate(self, value):
+        return self.base.evaluate(value) ** self.power.evaluate(value)
+
+    def simplify(self):
+        if isinstance(self.power, Constant):
+            return Power(self.base, self.power.constant)
+        return Exponential(self.base, self.power)
+
+    def derivative(self):
+        return Product([
+            Exponential(self.base, self.power),
+            Sum([Product([Logarithm(self.base, math.e), self.power.derivative()]),
+                 Product([Logarithm(self.base, math.e).derivative(), self.power])])]).simplify()
+
+    def __str__(self):
+        return '({0})^({1})'.format(self.base, self.power)
+
+    def __eq__(self, other):
+        return self.base == other.base and self.power == other.power
+

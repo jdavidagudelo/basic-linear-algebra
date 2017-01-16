@@ -1,11 +1,11 @@
 from unittest.case import TestCase
-from functions import Variable, Constant, Product, Sum, Power
+from functions import Variable, Constant, Product, Sum, Power, Exponential
 import math
 
 
 class MatrixTest(TestCase):
     evaluate_values = [1, 2, 3, 4, 5, 6, 7, 8,
-                       1.9, 2.9, 29992.209992, 100, -11, -12, 0,
+                       1.9, 2.9, 29.209992, 100, -11, -12, 0,
                        -12.092, math.pi, math.e]
     constant_values = [1, 2, 3, 4, 5, 6, 7, 8,
                        1.9, 2.9, 29992.209992, 100, -11, -12, 0,
@@ -13,6 +13,7 @@ class MatrixTest(TestCase):
     evaluate_powers = [1, 2, 3, 4, 5, 6, 7, 8,
                        1.9, 2.9, 11.209992, 10, -11, -12, 0,
                        -12.092, math.pi, math.e]
+    exponential_bases = [1, 2, 3, 4, 5, math.e, math.pi]
 
     variable_names = ['x', 'y', 'z', 'myVar', 'my_var']
 
@@ -248,10 +249,22 @@ class MatrixTest(TestCase):
         f = (x ** 2.5) * 2.5 + (x ** 2.4) * 2.4 + (x ** 2.3)*2.3 - (x ** 2.2)*2.2 - (x**2.1)*2.1 + (x**2)*2
         self.assertAlmostEqual(f.derivative().evaluate(2), 33.33146653901524)
         f = (x ** 4 + (x**3)*3 + (x**2)*7 + (x*2)+10)**4
-        self.assertEqual(f.derivative().evaluate(1), 1411372)
+        self.assertAlmostEqual(f.derivative().evaluate(1), 1411372)
         f = (x*x*x*x + (x*x*x)*3 + (x*x)*7 + (x*2)+10)**4
-        self.assertEqual(f.derivative().evaluate(1), 1411372)
+        self.assertAlmostEqual(f.derivative().evaluate(1), 1411372)
 
+    def test_evaluate_exponential_function(self):
+        for base in self.exponential_bases:
+            for value in self.evaluate_values:
+                exponential = Exponential(base, Variable('x'))
+                self.assertAlmostEqual(exponential.evaluate(value), base ** value)
+
+    def test_derivative_exponential_function(self):
+        x = Variable('x')
+        ex = Exponential(math.e, x)
+        print(ex)
+        print(ex.derivative())
+        self.assertEqual(ex.derivative(), ex)
 
 
 
